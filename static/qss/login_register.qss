@@ -1,0 +1,50 @@
+/* -*- coding: UTF-8 -*- */
+/*Login Register*/
+
+/* QFrame边框背景色等 */
+QFrame#frameBg,QFrame#frameLoginRegister{
+    background-color: rgb(220, 220, 220);
+    border-radius:10px;
+}
+
+/* QStackedWidget边框背景色等 */
+QStackedWidget{
+    background-color: rgb(230, 230, 230);
+    border-radius:10px;
+}
+
+QFrame#line{
+    border:none;
+    background-color:#000000;
+    max-width:1px;
+}
+
+/* QPushButton */
+QPushButton{
+    border: 1px solid;
+    border-radius:6px;
+    min-height: 20px;
+}
+
+QPushButton:hover{
+    background-color:rgb(255 , 255 , 255);
+}
+
+QPushButton#pushButtonLogin,QPushButton#pushButtonRegister,QPushButton#pushButtonForgetOk{
+    min-height: 28px;
+}
+
+QPushButton#pushButtonForget:hover{
+    background-color:rgb(230 , 230 , 230);
+}
+
+QPushButton#pushButtonForget{
+    border: none;
+    min-width: 60px;
+}
+
+/* QLineEdit */
+QLineEdit{
+    border:1px solid;
+    border-radius:3px;
+}

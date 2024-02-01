@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>登录与注册</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../static/resources.qrc">
+    <normaloff>:/home/images/testing_x48.ico</normaloff>:/home/images/testing_x48.ico</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QFrame" name="frameBg">
@@ -47,7 +51,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../static/images/png_images/testing_x256.png</pixmap>
+         <pixmap resource="../static/resources.qrc">:/home/images/testing_x256.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -90,7 +94,7 @@
       <item row="1" column="0" colspan="3">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page">
          <layout class="QGridLayout" name="gridLayout_4">
@@ -382,6 +386,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../static/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
