@@ -94,7 +94,7 @@
       <item row="1" column="0" colspan="3">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page">
          <layout class="QGridLayout" name="gridLayout_4">
@@ -121,6 +121,9 @@
           </item>
           <item row="1" column="1" colspan="2">
            <widget class="QLineEdit" name="lineEditPassword">
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
             <property name="placeholderText">
              <string>密码</string>
             </property>
@@ -201,6 +204,9 @@
           </item>
           <item row="2" column="1" colspan="2">
            <widget class="QLineEdit" name="lineEdit_3">
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
             <property name="placeholderText">
              <string>密码</string>
             </property>
@@ -215,6 +221,9 @@
           </item>
           <item row="3" column="1" colspan="2">
            <widget class="QLineEdit" name="lineEdit_4">
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
             <property name="placeholderText">
              <string>确认密码</string>
             </property>
@@ -304,6 +313,9 @@
           </item>
           <item row="1" column="1" colspan="2">
            <widget class="QLineEdit" name="lineEdit_7">
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
             <property name="placeholderText">
              <string>密码</string>
             </property>
@@ -318,6 +330,9 @@
           </item>
           <item row="2" column="1" colspan="2">
            <widget class="QLineEdit" name="lineEdit_8">
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
             <property name="placeholderText">
              <string>确认密码</string>
             </property>
