@@ -7,9 +7,9 @@
 @ Version     : V1.0.0
 @ Description : 
 """
-import os
 import sys
 
+from PyQt5.QtCore import QFile
 from PyQt5.QtWidgets import QApplication, QDialog
 
 from core.login_register import UiLoginRegisterQDialog
@@ -39,9 +39,12 @@ class StartupMainWindow(object):
 
     def login_ui(self):
         """登录"""
-        qss_file = os.path.join(os.getcwd(), 'static/qss/login_register.qss')
-        style_sheet = read_qss_file(qss_file)
-        self.login_register_ui.setStyleSheet(style_sheet)  # 设置样式
+        qss = QFile(':/QSS/qss/login_register.qss')  # 资源使用 QFile 打开
+        if qss.open(QFile.ReadOnly | QFile.Text):
+            style_bytearray = qss.readAll()  # 类型为 QByteArray
+            style = str(style_bytearray, encoding='UTF-8')
+            self.login_register_ui.setStyleSheet(style)  # 设置样式
+        qss.close()
 
     def main_ui(self):
         """主窗口"""
