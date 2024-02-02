@@ -4,3 +4,4 @@ pyqt5-tools
 PyMySQL~=1.1.0
 sqlalchemy~=2.0.25
 bcrypt~=4.1.2
+email-validator
