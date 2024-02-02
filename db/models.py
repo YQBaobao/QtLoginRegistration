@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 """
 @ Project     : QtLoginRegistration 
-@ File        : modules.py
+@ File        : models.py
 @ Author      : yqbao
 @ Version     : V1.0.0
 @ Description : 
