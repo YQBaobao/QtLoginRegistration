@@ -68,14 +68,6 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
             return
         self.accept()
 
-    def update_login_config(self, password):
-        """手动登录更新配置文件"""
-        if not self.checkBox.isChecked():
-            crypto.delete_db(self.accounts)
-            return
-        crypto.delete_db(self.accounts)
-        crypto.insert_db(self.accounts, self.username, password)
-
     def required_login(self):
         """登录必填校验"""
         self.account = self.lineEditUsername.text()
