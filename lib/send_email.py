@@ -7,6 +7,8 @@
 @ Version     : V1.0.0
 @ Description : 
 """
+import smtplib
+
 import yagmail
 
 from setting import CONFIG
@@ -49,5 +51,9 @@ class SendEmail(BasicEmail):
             </div>'''.format(captcha)
         ]
         to = [to, ]
-        self.send(subject=subject, contents=contents, to=to)
-        self.close()
+        try:
+            self.send(subject=subject, contents=contents, to=to)
+        except smtplib.SMTPDataError as e:
+            print(e)
+        finally:
+            self.close()
