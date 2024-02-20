@@ -62,5 +62,5 @@ class CRUDConfirmString(CRUD):
     def update(self, db: Session, email: str, update_data: dict):
         """更新"""
         db_confirm_string = db.query(models.ConfirmString).filter(
-            and_(models.ConfirmString.email == email)).update(update_data)
+            and_(models.ConfirmString.email == email, models.ConfirmString.deleted == 0)).update(update_data)
         return self._commit(db, db_confirm_string)
