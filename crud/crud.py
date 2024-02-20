@@ -44,6 +44,12 @@ class CRUDUser(CRUD):
         db.add(db_user)
         return self._commit(db, db_user)
 
+    def update(self, db: Session, email: str, update_data: dict):
+        """更新"""
+        db_user = db.query(models.User).filter(
+            and_(models.User.email == email, models.User.deleted == 0)).update(update_data)
+        return self._commit(db, db_user)
+
 
 class CRUDConfirmString(CRUD):
 

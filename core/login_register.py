@@ -16,8 +16,7 @@ from PyQt5.QtWidgets import QDialog
 from email_validator import validate_email, EmailNotValidError
 
 from crud.crud import CRUDUser, CRUDConfirmString
-from db import SessionLocal, schemas
-from db.models import ConfirmString
+from db import SessionLocal, models, schemas
 from lib.basic_function import BasicFunction
 from lib.lib import check_code
 from lib.send_email import SendEmail
@@ -54,6 +53,12 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
         self.lineEdit_4.textEdited.connect(lambda: self.check_password(self.lineEdit_3, self.lineEdit_4, self.label_9))
         self.pushButtonSend.clicked.connect(lambda: self.send_captcha(self.lineEdit_2, self.pushButtonSend))
         self.pushButtonRegister.clicked.connect(self.register)
+
+        # 忘记密码页绑定信号
+        self.lineEdit_7.textEdited.connect(lambda: self.check_password(self.lineEdit_7, self.lineEdit_8, self.label_14))
+        self.lineEdit_8.textEdited.connect(lambda: self.check_password(self.lineEdit_7, self.lineEdit_8, self.label_14))
+        self.pushButtonSend2.clicked.connect(lambda: self.send_captcha(self.lineEdit_6, self.pushButtonSend2))
+        self.pushButtonForgetOk.clicked.connect(self.forget_password)
 
     def init_time(self):
         self.count = 60
@@ -114,7 +119,7 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
             username=self.username, password=str_my_hash_password, email=self.email, createTime=datetime.datetime.now())
         with SessionLocal() as db:
             self.user.create(db, user)
-            self.confirm_string.update(db, self.email, {ConfirmString.deleted: 1})
+            self.confirm_string.update(db, self.email, {models.ConfirmString.deleted: 1})
         # 注册成功后，判断是否选中直接登录,若未选中，则切换会登录页
         if self.checkBox_2.isChecked():
             self.accept()
@@ -234,6 +239,52 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
             createTime=datetime.datetime.now())
         with SessionLocal() as db:
             # 每点击一次发送，就将旧的删除
-            self.confirm_string.update(db, self.email, {ConfirmString.deleted: 1})
+            self.confirm_string.update(db, self.email, {models.ConfirmString.deleted: 1})
             # 保存信息
             self.confirm_string.create(db, confirm_string)
+
+    def forget_password(self):
+        """忘记密码动作"""
+        if (not self.forget_password_required() or
+                not self.forget_password_check_email_exist() or
+                not self.check_email_format() or
+                not self.check_captcha()):  # 数据校验
+            return
+        bytes_my_password = bytes(self.password, encoding="utf-8")
+        bytes_my_hash_password = bcrypt.hashpw(bytes_my_password, bcrypt.gensalt(rounds=13))
+        str_my_hash_password = bytes.decode(bytes_my_hash_password)
+        with SessionLocal() as db:
+            self.user.update(db, self.email, {models.User.password: str_my_hash_password})
+            self.confirm_string.update(db, self.email, {models.ConfirmString.deleted: '1'})
+        # 注册成功后，判断是否选中找回密码后直接登录,若未选中，则切换会登录页
+        if self.checkBox_3.isChecked():
+            self.accept()
+        else:
+            self.stackedWidget.setCurrentIndex(0)
+
+    def forget_password_check_email_exist(self):
+        """检查邮箱是否是已经注册的用户"""
+        with SessionLocal() as db:
+            get_email = self.user.get_user_by_email(db, self.email)
+        if not get_email:
+            self.basic_function.info_message("邮箱地址系统中不存在")
+            return
+        return True
+
+    def forget_password_required(self):
+        self.email = self.lineEdit_6.text()
+        self.password = self.lineEdit_7.text()
+        self.captcha = self.lineEdit_9.text()
+        if not self.email.strip():
+            self.basic_function.info_message("邮箱地址不能为空")
+            return False
+        elif not self.password.strip():
+            self.basic_function.info_message("用户密码不能为空")
+            return False
+        elif not self.repeat_password.strip():
+            self.basic_function.info_message("重复密码不能为空")
+            return False
+        elif not self.captcha.strip():
+            self.basic_function.info_message("邮箱验证码不能为空")
+            return False
+        return True
