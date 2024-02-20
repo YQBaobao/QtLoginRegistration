@@ -179,7 +179,9 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
         if not get_active_code:
             self.basic_function.info_message("验证码已失效，请重新发送邮件获取")
             return
-        if datetime.datetime.now() > get_active_code.activeValidityPeriod:
+        time_now = datetime.datetime.now()
+        time_diff = time_now - get_active_code.activeValidityPeriod
+        if 5 * 60 < time_diff.seconds or time_diff.seconds <= 0:
             self.basic_function.info_message("验证码已过期，请重新发送邮件获取")
             return
         if self.captcha != get_active_code.activeCode:
