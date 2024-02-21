@@ -7,3 +7,4 @@ bcrypt~=4.1.2
 email-validator
 pydantic
 yagmail
+pywin32

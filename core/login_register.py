@@ -17,6 +17,7 @@ from email_validator import validate_email, EmailNotValidError
 
 from crud.crud import CRUDUser, CRUDConfirmString
 from db import session_factory, models, schemas
+from lib import crypto
 from lib.basic_function import BasicFunction
 from lib.lib import check_code
 from lib.send_email import SendEmail
@@ -64,6 +65,27 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
         self.pushButtonSend2.clicked.connect(lambda: self.send_captcha(self.lineEdit_6, self.pushButtonSend2))
         self.pushButtonForgetOk.clicked.connect(self.forget_password)
 
+        # 窗口切换信号
+        self.stackedWidget.currentChanged.connect(self.update_stacked_widget)
+
+        # 记住
+        self.accounts = 'remember'
+        crypto.create_db(self.accounts)  # 创建存储库
+        self.remember_init()
+
+    def update_stacked_widget(self):
+        self.lineEditUsername.clear()
+        self.lineEditPassword.clear()
+        self.lineEdit.clear()
+        self.lineEdit_2.clear()
+        self.lineEdit_3.clear()
+        self.lineEdit_4.clear()
+        self.lineEdit_5.clear()
+        self.lineEdit_6.clear()
+        self.lineEdit_7.clear()
+        self.lineEdit_8.clear()
+        self.lineEdit_9.clear()
+
     def init_time(self):
         self.count = 60
         self.time = QTimer(self)
@@ -96,6 +118,7 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
             self.basic_function.info_message("用户名或密码错误")
             return
         self.accept()
+        self.remember()
 
     def login_required(self):
         """登录必填校验"""
@@ -294,5 +317,31 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
             return False
         elif not self.captcha.strip():
             self.basic_function.info_message("邮箱验证码不能为空")
+            return False
+        return True
+
+    def remember_init(self):
+        """初始化"""
+        if not self.remember_required():
+            return
+        self.lineEditUsername.setText(self.username)
+        self.lineEditPassword.setText(self.password)
+        return True
+
+    def remember(self):
+        """记住"""
+        if not self.checkBox.isChecked():
+            crypto.delete_db(self.accounts)
+            return
+        crypto.delete_db(self.accounts)
+        crypto.insert_db(self.accounts, self.account, self.password)
+
+    def remember_required(self):
+        """参数校验"""
+        try:
+            self.username, self.password = crypto.decrypt(self.accounts)
+            if not self.username.strip() or not self.password.strip():
+                return False
+        except IndexError:
             return False
         return True
