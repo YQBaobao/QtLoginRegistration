@@ -27,6 +27,9 @@ class Ui_MainWindow(object):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
+        self.pushButton = QtWidgets.QPushButton(MainWindow)
+        self.pushButton.setObjectName("pushButton")
+        self.verticalLayout.addWidget(self.pushButton)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -36,3 +39,4 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "系统主页面"))
         self.label.setText(_translate("MainWindow",
                                       "<html><head/><body><p><span style=\" font-size:28pt; font-weight:600;\">登录后进入系统主页面</span></p></body></html>"))
+        self.pushButton.setText(_translate("MainWindow", "退出登录"))
