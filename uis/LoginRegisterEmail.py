@@ -130,7 +130,6 @@ class Ui_LoginRegister(object):
         self.label_9.setObjectName("label_9")
         self.gridLayout_5.addWidget(self.label_9, 5, 0, 1, 3)
         self.checkBox_2 = QtWidgets.QCheckBox(self.page_2)
-        self.checkBox_2.setChecked(True)
         self.checkBox_2.setObjectName("checkBox_2")
         self.gridLayout_5.addWidget(self.checkBox_2, 6, 0, 1, 3)
         self.pushButtonRegister = QtWidgets.QPushButton(self.page_2)
