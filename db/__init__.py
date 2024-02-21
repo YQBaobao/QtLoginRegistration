@@ -7,6 +7,7 @@
 @ Version     : V1.0.0
 @ Description : 
 """
+from contextlib import contextmanager
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -29,3 +30,16 @@ engine = create_engine(
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
 Base = declarative_base()
+
+
+# 上下文管理，管理会话
+@contextmanager
+def session_factory():
+    session = SessionLocal()
+    try:
+        yield session
+    except Exception:
+        session.rollback()
+        raise
+    finally:
+        session.close()
