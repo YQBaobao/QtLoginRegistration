@@ -264,7 +264,7 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
         str_my_hash_password = bytes.decode(bytes_my_hash_password)
         with session_factory() as db:
             self.user.update(db, self.email, {models.User.password: str_my_hash_password})
-        # 注册成功后，判断是否选中找回密码后直接登录,若未选中，则切换会登录页
+        # 判断是否选中找回密码后直接登录,若未选中，则切换会登录页
         if self.checkBox_3.isChecked():
             self.accept()
         else:
