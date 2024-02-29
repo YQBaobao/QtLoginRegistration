@@ -294,7 +294,7 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
             self.stackedWidget.setCurrentIndex(0)
 
     def forget_password_check_email_exist(self):
-        """检查邮箱是否是已经注册的用户"""
+        """检查邮箱是否注册"""
         with session_factory() as db:
             get_email = self.user.get_user_by_email(db, self.email)
         if not get_email:
