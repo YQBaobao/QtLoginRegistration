@@ -8,3 +8,4 @@ email-validator
 pydantic
 yagmail
 pywin32
+cryptography~=42.0.5
