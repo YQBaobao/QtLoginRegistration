@@ -69,8 +69,9 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
         self.stackedWidget.currentChanged.connect(self.update_stacked_widget)
 
         # 记住
-        self.accounts = 'remember'
-        crypto.create_db(self.accounts)  # 创建存储库
+        self.accounts = 'remember.db'
+        self.table = 'remember'
+        crypto.create_db(self.accounts, self.table)  # 创建存储库
         self.remember_init()
 
     def update_stacked_widget(self):
@@ -331,15 +332,15 @@ class UiLoginRegisterQDialog(QDialog, Ui_LoginRegister):
     def remember(self):
         """记住"""
         if not self.checkBox.isChecked():
-            crypto.delete_db(self.accounts)
+            crypto.delete_db(self.accounts, self.table)
             return
-        crypto.delete_db(self.accounts)
-        crypto.insert_db(self.accounts, self.account, self.password)
+        crypto.delete_db(self.accounts, self.table)
+        crypto.insert_db(self.accounts, self.table, self.account, self.password)
 
     def remember_required(self):
         """参数校验"""
         try:
-            self.username, self.password = crypto.decrypt(self.accounts)
+            self.username, self.password = crypto.decrypt(self.accounts, self.table)
             if not self.username.strip() or not self.password.strip():
                 return False
         except IndexError:
