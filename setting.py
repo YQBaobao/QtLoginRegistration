@@ -46,6 +46,10 @@ class DevelopConfig(Setting):
     SQLALCHEMY_ECHO = True  # 显示原始SQL语句
     SQLALCHEMY_ECHO_POOL = True  # 连接池记录信息
 
+    ENCRYPTION_KEY = "Pg^.l!8UdJ+Y7dMIe&fl*%!p9@ej]/#tL~3E4%6?"  # 默认加密密钥，需要你修改
+    OBFUSCATION_START_TOKEN = "$^*ENCRYPT="  # 加密密钥的开头
+    OBFUSCATION_END_TOKEN = "?&#$"  # 加密密钥的结尾
+
 
 # 环境映射关系
 mapping = {
